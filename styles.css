@@ -1,0 +1,21 @@
+.container {
+    background-color: #B2E0D9;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #004f4f;
+}
+
+.button {
+    background-color: #A3D9D4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #92c3c1;
+}
