@@ -1,1 +1,52 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>DNA Exploration</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #e0fcf1;\n            color: #333;\n        }\n        header {\n            background-color: #b2e0d2;\n            padding: 15px;\n            text-align: center;\n        }\n        nav a {\n            margin: 0 15px;\n            text-decoration: none;\n            color: #333;\n        }\n        .quiz {\n            background-color: #d9f2e6;\n            padding: 20px;\n            border-radius: 5px;\n            margin: 20px 0;\n        }\n        footer {\n            text-align: center;\n            padding: 10px;\n            background-color: #b2e0d2;\n        }\n    </style>\n</head>\n<body>\n    <header>\n        <h1>Welcome to DNA Exploration</h1>\n        <nav>\n            <a href="#overview">Overview</a>\n            <a href="#facts">Interesting Facts</a>\n            <a href="#quiz">Quiz</a>\n        </nav>\n    </header>\n    <main>\n        <section id="overview">\n            <h2>What is DNA?</h2>\n            <p>DNA, or deoxyribonucleic acid, is the molecule that carries the genetic instructions for life.</p>\n        </section>\n        <section id="facts">\n            <h2>Interesting Facts about DNA</h2>\n            <ul>\n                <li>It is estimated that 99.9% of human DNA is identical across all people.</li>\n                <li>DNA can be found in almost every cell of the human body!</li>\n                <li>Every person has a unique DNA sequence, making forensic DNA analysis a powerful tool.</li>\n            </ul>\n        </section>\n        <section class="quiz" id="quiz">\n            <h2>Test Your Knowledge!</h2>\n            <p>1. What does DNA stand for?</p>\n            <p>2. How many chromosomes do humans have?</p>\n            <p>3. Who discovered the structure of DNA?</p>\n        </section>\n        <figure>\n            <img src="https://example.com/dna-image.jpg" alt="DNA structure" style="max-width:100%; height:auto;">\n            <figcaption>The structure of DNA</figcaption>\n        </figure>\n    </main>\n    <footer>\n        <p>&copy; 2026 DNA Project. All Rights Reserved.</p>\n    </footer>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Генетика за откриватели</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🧬 DNA World</div>
+        <nav>
+            <a href="#overview">Какво е ДНК?</a>
+            <a href="#facts">Яки факти</a>
+            <a href="#quiz-section">Тест</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="overview" class="card">
+            <h2>Какво всъщност е ДНК? 🧪</h2>
+            <p>ДНК (дезоксирибонуклеинова киселина) е молекулата, която носи генетичните инструкции за живота. Тя е като софтуерен код, който казва на тялото ти как да изглежда и да работи!</p>
+        </section>
+
+        <section id="facts" class="card">
+            <h2>Топ Факти за Гении 🚀</h2>
+            <ul class="facts-list">
+                <li>🧬 Около 99.9% от ДНК на всички хора е идентична.</li>
+                <li>🍌 Ти споделяш около 50% от своята ДНК с банан!</li>
+                <li>🔍 Всеки човек (освен еднояйчните близнаци) има уникална ДНК последователност.</li>
+            </ul>
+        </section>
+
+        <section id="quiz-section" class="card quiz-card">
+            <h2>DNA Master Quiz 🧠</h2>
+            <div id="quiz-container">
+                <p id="question-text">Готов ли си да тестваш знанията си?</p>
+                <div id="answer-buttons" class="btn-grid">
+                    </div>
+                <button id="start-btn" class="button">Започни куиза</button>
+            </div>
+            <p id="score-display"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DNA Project | Бъдещето е в гените 🧬</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
