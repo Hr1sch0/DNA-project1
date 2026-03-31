@@ -1,51 +1,100 @@
-// script.js
-
-// Quiz functionality for the DNA website
-
-// Function to create a Quiz
-function createQuiz(questions) {
-    let score = 0;
-    questions.forEach((question, index) => {
-        const userAnswer = prompt(`Q${index + 1}: ${question.prompt}\n${question.answers.join('\n')}`);
-        if (userAnswer === question.correctAnswer) {
-            score++;
-        }
-    });
-    alert(`Your score: ${score} out of ${questions.length}`);
-}
-
-// Sample questions
-const quizQuestions = [
+// Разширена база данни с въпроси за ДНК
+const questions = [
     {
-        prompt: 'What is the function of DNA?',
-        answers: ['Store genetic information', 'Protein synthesis', 'Energy production'],
-        correctAnswer: 'Store genetic information'
+        q: "Какво е основната функция на ДНК?",
+        a: [
+            { text: "Съхранение на генетична информация", correct: true },
+            { text: "Производство на енергия", correct: false },
+            { text: "Пренасяне на кислород", correct: false }
+        ]
     },
     {
-        prompt: 'What is the shape of DNA?',
-        answers: ['Double Helix', 'Single strand', 'Circle'],
-        correctAnswer: 'Double Helix'
+        q: "Каква е формата на ДНК молекулата?",
+        a: [
+            { text: "Кръгла", correct: false },
+            { text: "Двойна спирала (Double Helix)", correct: true },
+            { text: "Единична нишка", correct: false }
+        ]
+    },
+    {
+        q: "Колко хромозоми има в една нормална човешка клетка?",
+        a: [
+            { text: "23", correct: false },
+            { text: "46", correct: true },
+            { text: "98", correct: false }
+        ]
+    },
+    {
+        q: "Кои са четирите азотни основи в ДНК?",
+        a: [
+            { text: "A, T, C, G", correct: true },
+            { text: "X, Y, Z, W", correct: false },
+            { text: "Alpha, Beta, Gamma", correct: false }
+        ]
+    },
+    {
+        q: "Къде се намира ДНК в клетката?",
+        a: [
+            { text: "В рибозомите", correct: false },
+            { text: "В ядрото", correct: true },
+            { text: "В стената на клетката", correct: false }
+        ]
     }
 ];
 
-// Start the quiz
-createQuiz(quizQuestions);
+const startButton = document.getElementById('start-btn');
+const questionElement = document.getElementById('question-text');
+const answerButtonsElement = document.getElementById('answer-buttons');
+const scoreDisplay = document.getElementById('score-display');
 
-// Interactive features
-function toggleContent(elementId) {
-    const element = document.getElementById(elementId);
-    if (element.style.display === 'none') {
-        element.style.display = 'block';
-    } else {
-        element.style.display = 'none';
+let currentQuestionIndex = 0;
+let score = 0;
+
+startButton.addEventListener('click', startQuiz);
+
+function startQuiz() {
+    startButton.style.display = 'none';
+    currentQuestionIndex = 0;
+    score = 0;
+    scoreDisplay.innerText = '';
+    showQuestion();
+}
+
+function showQuestion() {
+    clearStatus();
+    let currentQuestion = questions[currentQuestionIndex];
+    questionElement.innerText = `Въпрос ${currentQuestionIndex + 1}: ${currentQuestion.q}`;
+
+    currentQuestion.a.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('button');
+        button.addEventListener('click', () => selectAnswer(answer.correct));
+        answerButtonsElement.appendChild(button);
+    });
+}
+
+function clearStatus() {
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
-// Dynamic content example
-function updateContent() {
-    const dynamicContent = document.getElementById('dynamicContent');
-    dynamicContent.innerHTML = 'Welcome to the DNA website! Explore our features.';
+function selectAnswer(isCorrect) {
+    if (isCorrect) score++;
+    
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        finishQuiz();
+    }
 }
 
-// Call updateContent on page load
-window.onload = updateContent;
+function finishQuiz() {
+    clearStatus();
+    questionElement.innerText = "Мисията изпълнена! 🧬";
+    scoreDisplay.innerHTML = `Твоят резултат: <strong>${score}</strong> от <strong>${questions.length}</strong>`;
+    startButton.innerText = "Рестартирай мисията";
+    startButton.style.display = 'block';
+}
