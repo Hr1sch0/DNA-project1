@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Генетика за откриватели</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🧬 DNA World</div>
+        <nav>
+            <a href="#overview">Какво е ДНК?</a>
+            <a href="#facts">Яки факти</a>
+            <a href="#quiz-section">Тест</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="overview" class="card">
+            <h2>Какво всъщност е ДНК? 🧪</h2>
+            <p>ДНК (дезоксирибонуклеинова киселина) е молекулата, която носи генетичните инструкции за живота. Тя е като софтуерен код, който казва на тялото ти как да изглежда и да работи!</p>
+        </section>
+
+        <section id="facts" class="card">
+            <h2>Топ Факти за Гении 🚀</h2>
+            <ul class="facts-list">
+                <li>🧬 Около 99.9% от ДНК на всички хора е идентична.</li>
+                <li>🍌 Ти споделяш около 50% от своята ДНК с банан!</li>
+                <li>🔍 Всеки човек (освен еднояйчните близнаци) има уникална ДНК последователност.</li>
+            </ul>
+        </section>
+
+        <section id="quiz-section" class="card quiz-card">
+            <h2>DNA Master Quiz 🧠</h2>
+            <div id="quiz-container">
+                <p id="question-text">Готов ли си да тестваш знанията си?</p>
+                <div id="answer-buttons" class="btn-grid">
+                    </div>
+                <button id="start-btn" class="button">Започни куиза</button>
+            </div>
+            <p id="score-display"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DNA Project | Бъдещето е в гените 🧬</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
