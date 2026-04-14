@@ -1,44 +1,43 @@
-// Разширена база данни с въпроси за ДНК
 const questions = [
     {
         q: "Какво е основната функция на ДНК?",
-        a: [
-            { text: "Съхранение на генетична информация", correct: true },
-            { text: "Производство на енергия", correct: false },
-            { text: "Пренасяне на кислород", correct: false }
-        ]
+        a: [{ text: "Съхранение на генетична информация", correct: true }, { text: "Производство на енергия", correct: false }]
     },
     {
         q: "Каква е формата на ДНК молекулата?",
-        a: [
-            { text: "Кръгла", correct: false },
-            { text: "Двойна спирала (Double Helix)", correct: true },
-            { text: "Единична нишка", correct: false }
-        ]
+        a: [{ text: "Двойна спирала", correct: true }, { text: "Кръгла", correct: false }]
     },
     {
-        q: "Колко хромозоми има в една нормална човешка клетка?",
-        a: [
-            { text: "23", correct: false },
-            { text: "46", correct: true },
-            { text: "98", correct: false }
-        ]
+        q: "Колко хромозоми има в нормална човешка клетка?",
+        a: [{ text: "46", correct: true }, { text: "23", correct: false }]
     },
     {
-        q: "Кои са четирите азотни основи в ДНК?",
-        a: [
-            { text: "A, T, C, G", correct: true },
-            { text: "X, Y, Z, W", correct: false },
-            { text: "Alpha, Beta, Gamma", correct: false }
-        ]
+        q: "Кои са основите в ДНК?",
+        a: [{ text: "A, T, C, G", correct: true }, { text: "X, Y, Z", correct: false }]
     },
     {
         q: "Къде се намира ДНК в клетката?",
-        a: [
-            { text: "В рибозомите", correct: false },
-            { text: "В ядрото", correct: true },
-            { text: "В стената на клетката", correct: false }
-        ]
+        a: [{ text: "В ядрото", correct: true }, { text: "В цитоплазмата", correct: false }]
+    },
+    {
+        q: "Колко процента ДНК споделяме с бананите?",
+        a: [{ text: "Около 50%", correct: true }, { text: "99%", correct: false }]
+    },
+    {
+        q: "Коя база се свързва винаги с Цитозин (C)?",
+        a: [{ text: "Гуанин (G)", correct: true }, { text: "Аденин (A)", correct: false }]
+    },
+    {
+        q: "Какво означава ДНК?",
+        a: [{ text: "Дезоксирибонуклеинова киселина", correct: true }, { text: "Динамична Нано Киселина", correct: false }]
+    },
+    {
+        q: "Може ли UV светлината да повреди ДНК?",
+        a: [{ text: "Да", correct: true }, { text: "Не", correct: false }]
+    },
+    {
+        q: "Колко процента от ДНК на всички хора е еднаква?",
+        a: [{ text: "99.9%", correct: true }, { text: "50%", correct: false }]
     }
 ];
 
@@ -65,7 +64,7 @@ function showQuestion() {
     let currentQuestion = questions[currentQuestionIndex];
     questionElement.innerText = `Въпрос ${currentQuestionIndex + 1}: ${currentQuestion.q}`;
 
-    currentQuestion.a.forEach(answer => {
+    currentQuestion.a.sort(() => Math.random() - 0.5).forEach(answer => {
         const button = document.createElement('button');
         button.innerText = answer.text;
         button.classList.add('button');
@@ -82,7 +81,6 @@ function clearStatus() {
 
 function selectAnswer(isCorrect) {
     if (isCorrect) score++;
-    
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
         showQuestion();
