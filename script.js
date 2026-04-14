@@ -1,98 +1,60 @@
 const questions = [
-    {
-        q: "Какво е основната функция на ДНК?",
-        a: [{ text: "Съхранение на генетична информация", correct: true }, { text: "Производство на енергия", correct: false }]
-    },
-    {
-        q: "Каква е формата на ДНК молекулата?",
-        a: [{ text: "Двойна спирала", correct: true }, { text: "Кръгла", correct: false }]
-    },
-    {
-        q: "Колко хромозоми има в нормална човешка клетка?",
-        a: [{ text: "46", correct: true }, { text: "23", correct: false }]
-    },
-    {
-        q: "Кои са основите в ДНК?",
-        a: [{ text: "A, T, C, G", correct: true }, { text: "X, Y, Z", correct: false }]
-    },
-    {
-        q: "Къде се намира ДНК в клетката?",
-        a: [{ text: "В ядрото", correct: true }, { text: "В цитоплазмата", correct: false }]
-    },
-    {
-        q: "Колко процента ДНК споделяме с бананите?",
-        a: [{ text: "Около 50%", correct: true }, { text: "99%", correct: false }]
-    },
-    {
-        q: "Коя база се свързва винаги с Цитозин (C)?",
-        a: [{ text: "Гуанин (G)", correct: true }, { text: "Аденин (A)", correct: false }]
-    },
-    {
-        q: "Какво означава ДНК?",
-        a: [{ text: "Дезоксирибонуклеинова киселина", correct: true }, { text: "Динамична Нано Киселина", correct: false }]
-    },
-    {
-        q: "Може ли UV светлината да повреди ДНК?",
-        a: [{ text: "Да", correct: true }, { text: "Не", correct: false }]
-    },
-    {
-        q: "Колко процента от ДНК на всички хора е еднаква?",
-        a: [{ text: "99.9%", correct: true }, { text: "50%", correct: false }]
-    }
+    { q: "Какво е ДНК?", a: [{t: "Генетичен код", c: true}, {t: "Вид клетка", c: false}] },
+    { q: "Колко хромозоми има човек?", a: [{t: "46", c: true}, {t: "23", c: false}] },
+    { q: "Каква е формата на ДНК?", a: [{t: "Двойна спирала", c: true}, {t: "Кръг", c: false}] },
+    { q: "Колко ДНК споделяме с банана?", a: [{t: "50%", c: true}, {t: "10%", c: false}] },
+    { q: "Къде се съхранява ДНК?", a: [{t: "В ядрото", c: true}, {t: "В кожата", c: false}] }
 ];
 
-const startButton = document.getElementById('start-btn');
-const questionElement = document.getElementById('question-text');
-const answerButtonsElement = document.getElementById('answer-buttons');
-const scoreDisplay = document.getElementById('score-display');
-
-let currentQuestionIndex = 0;
+let index = 0;
 let score = 0;
 
-startButton.addEventListener('click', startQuiz);
+const startBtn = document.getElementById('start-btn');
+const qText = document.getElementById('question-text');
+const btnGrid = document.getElementById('answer-buttons');
+const progBar = document.getElementById('progress-bar');
+const progCont = document.querySelector('.progress-container');
 
-function startQuiz() {
-    startButton.style.display = 'none';
-    currentQuestionIndex = 0;
-    score = 0;
-    scoreDisplay.innerText = '';
-    showQuestion();
-}
-
-function showQuestion() {
-    clearStatus();
-    let currentQuestion = questions[currentQuestionIndex];
-    questionElement.innerText = `Въпрос ${currentQuestionIndex + 1}: ${currentQuestion.q}`;
-
-    currentQuestion.a.sort(() => Math.random() - 0.5).forEach(answer => {
-        const button = document.createElement('button');
-        button.innerText = answer.text;
-        button.classList.add('button');
-        button.addEventListener('click', () => selectAnswer(answer.correct));
-        answerButtonsElement.appendChild(button);
+if (startBtn) {
+    startBtn.addEventListener('click', () => {
+        startBtn.style.display = 'none';
+        progCont.style.display = 'block';
+        showQuestion();
     });
 }
 
-function clearStatus() {
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
-    }
-}
+function showQuestion() {
+    clear();
+    progBar.style.width = `${(index / questions.length) * 100}%`;
 
-function selectAnswer(isCorrect) {
-    if (isCorrect) score++;
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        showQuestion();
+    if (index < questions.length) {
+        let q = questions[index];
+        qText.innerText = q.q;
+        q.a.forEach(ans => {
+            const b = document.createElement('button');
+            b.innerText = ans.t;
+            b.classList.add('button');
+            b.onclick = () => {
+                if (ans.c) score++;
+                index++;
+                showQuestion();
+            };
+            btnGrid.appendChild(b);
+        });
     } else {
-        finishQuiz();
+        finish();
     }
 }
 
-function finishQuiz() {
-    clearStatus();
-    questionElement.innerText = "Мисията изпълнена! 🧬";
-    scoreDisplay.innerHTML = `Твоят резултат: <strong>${score}</strong> от <strong>${questions.length}</strong>`;
-    startButton.innerText = "Рестартирай мисията";
-    startButton.style.display = 'block';
+function clear() {
+    while (btnGrid.firstChild) btnGrid.removeChild(btnGrid.firstChild);
+}
+
+function finish() {
+    progBar.style.width = '100%';
+    qText.innerText = "Тестът приключи!";
+    document.getElementById('score-display').innerHTML = `Резултат: ${score} от ${questions.length}`;
+    startBtn.innerText = "Опитай пак";
+    startBtn.style.display = 'inline-block';
+    startBtn.onclick = () => location.reload();
 }
