@@ -97,4 +97,41 @@
         <p>&copy; 2026 DNA Project 🧬</p>
     </footer>
 </body>
+</html> 
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Тест</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🧬 DNA World</div>
+        <nav>
+            <a href="index.html">Начало</a>
+            <a href="facts.html">Факти</a>
+            <a href="quiz.html" class="active">Тест</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="card quiz-box">
+            <h2>DNA Master Quiz</h2>
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <div id="quiz-content">
+                <p id="question-text">Готов ли си за предизвикателството?</p>
+                <div id="answer-buttons" class="btn-grid"></div>
+                <button id="start-btn" class="button">Започни теста</button>
+            </div>
+            <p id="score-display"></p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
 </html>
