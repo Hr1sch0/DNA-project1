@@ -3,50 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DNA World | Генетика за откриватели</title>
+    <title>DNA World | Начало</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="logo">🧬 DNA World</div>
         <nav>
-            <a href="#overview">Какво е ДНК?</a>
-            <a href="#facts">Яки факти</a>
-            <a href="#quiz-section">Тест</a>
+            <a href="index.html" class="active">Начало</a>
+            <a href="facts.html">Факти</a>
+            <a href="quiz.html">Тест</a>
         </nav>
     </header>
 
     <main class="container">
-        <section id="overview" class="card">
-            <h2>Какво всъщност е ДНК? 🧪</h2>
-            <p>ДНК (дезоксирибонуклеинова киселина) е молекулата, която носи генетичните инструкции за живота. Тя е като софтуерен код, който казва на тялото ти как да изглежда и да работи!</p>
-        </section>
-
-        <section id="facts" class="card">
-            <h2>Топ Факти за Гении 🚀</h2>
-            <ul class="facts-list">
-                <li>🧬 Около 99.9% от ДНК на всички хора е идентична.</li>
-                <li>🍌 Ти споделяш около 50% от своята ДНК с банан!</li>
-                <li>🔍 Всеки човек (освен еднояйчните близнаци) има уникална ДНК последователност.</li>
-            </ul>
-        </section>
-
-        <section id="quiz-section" class="card quiz-card">
-            <h2>DNA Master Quiz 🧠</h2>
-            <div id="quiz-container">
-                <p id="question-text">Готов ли си да тестваш знанията си?</p>
-                <div id="answer-buttons" class="btn-grid">
-                    </div>
-                <button id="start-btn" class="button">Започни куиза</button>
+        <section class="hero-card">
+            <h1>ДНК: Кодът на живота</h1>
+            <p>Разбери как 4 прости букви изграждат всичко живо на планетата – от теб до гигантските секвои.</p>
+            <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1000&q=80" alt="DNA Double Helix" class="main-image">
+            <div class="cta-group">
+                <a href="facts.html" class="button">Разгледай фактите</a>
+                <a href="quiz.html" class="button secondary">Стани ДНК майстор</a>
             </div>
-            <p id="score-display"></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 DNA Project | Бъдещето е в гените 🧬</p>
+        <p>&copy; 2026 DNA Project | Дизайн за бъдещето 🧬</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
