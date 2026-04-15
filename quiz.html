@@ -5,50 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DNA World | Геном Тест</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="bio-bg"></div>
+    
     <header>
-        <div class="logo">
-            <span class="helix-icon">🧬</span>
-            <span class="logo-text">DNA <span class="thin">World</span></span>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="helix-icon">🧬</span>
+                <span class="logo-text">DNA <span class="thin">World</span></span>
+            </div>
+            <nav>
+                <a href="index.html" class="btn-nav">НАЧАЛО</a>
+                <a href="facts.html" class="btn-nav">БИБЛИОТЕКА С ФАКТИ</a>
+                <a href="quiz.html" class="active btn-nav">ГЕНОМ ТЕСТ</a>
+            </nav>
         </div>
-        <nav>
-            <a href="index.html">Начало</a>
-            <a href="facts.html">Библиотека с Факти</a>
-            <a href="quiz.html" class="active">Геном Тест</a>
-        </nav>
     </header>
 
     <main class="container">
-        <section class="card quiz-box glass">
+        <section class="card quiz-box-pastel glass">
             <header class="quiz-header">
-                <div class="badge">Проверка на знанията</div>
+                <div class="badge-pastel">Проверка на знанията</div>
                 <h2>DNA Master Quiz</h2>
+                <p>25 предизвикателства пред ума ти.</p>
             </header>
             
-            <div class="progress-container">
-                <div class="progress-text">Въпрос <span id="current-q">0</span> / <span id="total-q">5</span></div>
-                <div class="progress-bar-out">
-                    <div id="progress-bar-in"></div>
+            <div class="progress-container-pastel">
+                <div class="progress-text">Въпрос <span id="current-q">0</span> / <span id="total-q">25</span></div>
+                <div class="progress-bar-out-pastel">
+                    <div id="progress-bar-in-pastel"></div>
                 </div>
             </div>
 
             <div id="quiz-content">
                 <p id="question-text">Готов ли си да дешифрираш генетичния код?</p>
-                <div id="answer-buttons" class="btn-grid"></div>
+                <div id="answer-buttons" class="btn-grid-pastel"></div>
                 <div class="quiz-controls">
-                    <button id="start-btn" class="btn-primary">Започни теста</button>
+                    <button id="start-btn" class="btn-pastel-primary">Започни теста</button>
                 </div>
             </div>
-            <div id="score-display" class="score-display"></div>
+            <div id="score-display" class="score-display-pastel"></div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2026 DNA Project 🧬</p>
+        <div class="container footer-content">
+            <p>&copy; 2026 DNA World | Вдъхновено от Природата 🧬</p>
         </div>
     </footer>
 
