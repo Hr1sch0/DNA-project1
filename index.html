@@ -3,135 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DNA World | Начало</title>
+    <title>DNA World | Кодът на Живота</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="bio-bg"></div>
     <header>
-        <div class="logo">🧬 DNA World</div>
+        <div class="logo">
+            <span class="helix-icon">🧬</span>
+            <span class="logo-text">DNA <span class="thin">World</span></span>
+        </div>
         <nav>
             <a href="index.html" class="active">Начало</a>
-            <a href="facts.html">Факти</a>
-            <a href="quiz.html">Тест</a>
+            <a href="facts.html">Библиотека с Факти</a>
+            <a href="quiz.html">Геном Тест</a>
         </nav>
     </header>
 
     <main class="container">
-        <section class="hero-card">
-            <h1>ДНК: Кодът на живота</h1>
-            <p>Разбери как 4 прости букви изграждат всичко живо на планетата – от теб до гигантските секвои.</p>
-            <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1000&q=80" alt="DNA Double Helix" class="main-image">
-            <div class="cta-group">
-                <a href="facts.html" class="button">Разгледай фактите</a>
-                <a href="quiz.html" class="button secondary">Стани ДНК майстор</a>
+        <section class="hero-visual">
+            <div class="hero-content">
+                <div class="badge">Биология • Химия • Информация</div>
+                <h1>Дезоксирибонуклеинова киселина</h1>
+                <p class="subtitle">Открий тайните на молекулата, която дефинира всеки аспект на живата природа. Четири прости бази. Безкрайни възможности.</p>
+                <div class="cta-group">
+                    <a href="facts.html" class="btn-primary">Изследвай 20 Факта</a>
+                    <a href="quiz.html" class="btn-secondary">Тествай знанията си</a>
+                </div>
+            </div>
+            <div class="hero-image-container">
+                <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=1000" alt="3D DNA Helix" class="floating-helix">
+            </div>
+        </section>
+
+        <section class="base-pairs-preview">
+            <h2>Фундаментът на живота</h2>
+            <div class="bases-grid">
+                <div class="base a"><span>A</span> Adenine</div>
+                <div class="base t"><span>T</span> Thymine</div>
+                <div class="base c"><span>C</span> Cytosine</div>
+                <div class="base g"><span>G</span> Guanine</div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 DNA Project | Дизайн за бъдещето 🧬</p>
-    </footer>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DNA World | Интересни Факти</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <div class="logo">🧬 DNA World</div>
-        <nav>
-            <a href="index.html">Начало</a>
-            <a href="facts.html" class="active">Факти</a>
-            <a href="quiz.html">Тест</a>
-        </nav>
-    </header>
-
-    <main class="container">
-        <h2 class="title">Удивителни Генетични Факти 🚀</h2>
-        <div class="facts-grid">
-            <div class="fact-card">
-                <img src="https://images.unsplash.com/photo-1559828589-72ed68087961?auto=format&fit=crop&w=400&q=80" alt="Banana">
-                <div class="fact-info">
-                    <h3>Бананова ДНК</h3>
-                    <p>Хората споделят около 50% от своите гени с бананите. Всички сме малко плодови!</p>
-                </div>
-            </div>
-            <div class="fact-card">
-                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=400&q=80" alt="Space">
-                <div class="fact-info">
-                    <h3>До Плутон и обратно</h3>
-                    <p>Ако разпънеш ДНК от всичките си клетки, тя ще стигне до Плутон и ще се върне обратно.</p>
-                </div>
-            </div>
-            <div class="fact-card">
-                <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=400&q=80" alt="Virus">
-                <div class="fact-info">
-                    <h3>Вирусно минало</h3>
-                    <p>Около 8% от твоята ДНК са останки от вируси, които са инфектирали предците ни преди милиони години.</p>
-                </div>
-            </div>
-            <div class="fact-card">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80" alt="Identical">
-                <div class="fact-info">
-                    <h3>99.9% еднакви</h3>
-                    <p>Всички хора на Земята са 99.9% идентични на генетично ниво. Разликата е само в 0.1%!</p>
-                </div>
-            </div>
-            <div class="fact-card">
-                <img src="https://images.unsplash.com/photo-1581093583449-8255a7d46e66?auto=format&fit=crop&w=400&q=80" alt="Storage">
-                <div class="fact-info">
-                    <h3>Супер склад</h3>
-                    <p>ДНК може да съхранява данни. 1 грам ДНК може да побере целия интернет архив на Google и Facebook.</p>
-                </div>
-            </div>
+        <div class="footer-content">
+            <p>&copy; 2026 DNA Project | Дизайн за бъдещето на биоинформатиката</p>
+            <p class="bases-decoder">A-T | C-G</p>
         </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 DNA Project 🧬</p>
     </footer>
-</body>
-</html> 
-
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DNA World | Тест</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <div class="logo">🧬 DNA World</div>
-        <nav>
-            <a href="index.html">Начало</a>
-            <a href="facts.html">Факти</a>
-            <a href="quiz.html" class="active">Тест</a>
-        </nav>
-    </header>
-
-    <main class="container">
-        <section class="card quiz-box">
-            <h2>DNA Master Quiz</h2>
-            <div class="progress-container">
-                <div id="progress-bar"></div>
-            </div>
-            <div id="quiz-content">
-                <p id="question-text">Готов ли си за предизвикателството?</p>
-                <div id="answer-buttons" class="btn-grid"></div>
-                <button id="start-btn" class="button">Започни теста</button>
-            </div>
-            <p id="score-display"></p>
-        </section>
-    </main>
-
-    <script src="script.js"></script>
 </body>
 </html>
