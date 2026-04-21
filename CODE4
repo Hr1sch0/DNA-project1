@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Геном Тест</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bio-bg"></div>
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="helix-icon">🧬</span>
+                <span class="logo-text">DNA <span class="thin">World</span></span>
+            </div>
+            <nav>
+                <a href="index.html" class="btn-nav">НАЧАЛО</a>
+                <a href="facts.html" class="btn-nav">БИБЛИОТЕКА С ФАКТИ</a>
+                <a href="quiz.html" class="active btn-nav">ГЕНОМ ТЕСТ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card quiz-box-pastel glass">
+            <header class="quiz-header">
+                <div class="badge-pastel">Проверка на знанията</div>
+                <h2>DNA Master Quiz</h2>
+                <p>25 предизвикателства пред ума ти.</p>
+            </header>
+            
+            <div class="progress-container-pastel">
+                <div class="progress-text">Въпрос <span id="current-q">0</span> / <span id="total-q">25</span></div>
+                <div class="progress-bar-out-pastel">
+                    <div id="progress-bar-in-pastel"></div>
+                </div>
+            </div>
+
+            <div id="quiz-content">
+                <p id="question-text">Готов ли си да дешифрираш генетичния код?</p>
+                <div id="answer-buttons" class="btn-grid-pastel"></div>
+                <div class="quiz-controls">
+                    <button id="start-btn" class="btn-pastel-primary">Започни теста</button>
+                </div>
+            </div>
+            <div id="score-display" class="score-display-pastel"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 DNA World | Вдъхновено от Природата 🧬</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+// Масив с въпроси (Добавени са 10 за пример, лесно се разширяват до 25)
+const questions = [
+    { q: "Какво е ДНК?", a: [{t: "Генетичен код", c: true}, {t: "Вид клетка", c: false}, {t: "Протеин", c: false}] },
+    { q: "Колко хромозоми има средностатистическият човек?", a: [{t: "46", c: true}, {t: "23", c: false}, {t: "48", c: false}] },
+    { q: "Каква е класическата форма на ДНК?", a: [{t: "Двойна спирала", c: true}, {t: "Единична верига", c: false}, {t: "Тройна хеликса", c: false}] },
+    { q: "Какъв процент ДНК приблизително споделяме с банана?", a: [{t: "50%", c: true}, {t: "99%", c: false}, {t: "10%", c: false}] },
+    { q: "Къде се съхранява по-голямата част от ДНК при хората?", a: [{t: "В ядрото", c: true}, {t: "В цитоплазмата", c: false}, {t: "В рибозомите", c: false}] },
+    { q: "Кои са четирите азотни бази в ДНК?", a: [{t: "A, T, C, G", c: true}, {t: "A, U, C, G", c: false}, {t: "A, T, U, G", c: false}] },
+    { q: "Коя база винаги се свързва с Аденин (A)?", a: [{t: "Тимин (T)", c: true}, {t: "Цитозин (C)", c: false}, {t: "Гуанин (G)", c: false}] },
+    { q: "Как се наричат краищата на хромозомите, които се скъсяват при стареене?", a: [{t: "Теломери", c: true}, {t: "Центромери", c: false}, {t: "Хистони", c: false}] },
+    { q: "Коя технология позволява прецизно редактиране на гени?", a: [{t: "CRISPR-Cas9", c: true}, {t: "PCR", c: false}, {t: "ЯМР", c: false}] },
+    { q: "Кой е първият успешно клониран бозайник?", a: [{t: "Овцата Доли", c: true}, {t: "Кучето Снупи", c: false}, {t: "Котката Ники", c: false}] },
+    // Тук добави още 15 въпроса по същия образец, за да станат 25.
+];
+
+let index = 0;
+let score = 0;
+
+// Елементи от DOM
+const startBtn = document.getElementById('start-btn');
+const qText = document.getElementById('question-text');
+const btnGrid = document.getElementById('answer-buttons');
+const progBarIn = document.getElementById('progress-bar-in-pastel');
+const progCont = document.querySelector('.progress-container-pastel');
+const currentQSpan = document.getElementById('current-q');
+const totalQSpan = document.getElementById('total-q');
+const scoreDisp = document.getElementById('score-display');
+
+// Динамично задаване на общия брой въпроси
+if (totalQSpan) totalQSpan.innerText = questions.length;
+
+if (startBtn) {
+    startBtn.addEventListener('click', startQuiz);
+}
+
+function startQuiz() {
+    startBtn.style.display = 'none';
+    progCont.style.display = 'block';
+    scoreDisp.style.display = 'none';
+    btnGrid.style.display = 'grid'; // Показва бутоните
+    index = 0;
+    score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    clear();
+    currentQSpan.innerText = index + 1;
+    // Обновяване на прогрес бар
+    progBarIn.style.width = `${((index) / questions.length) * 100}%`;
+
+    if (index < questions.length) {
+        let q = questions[index];
+        qText.innerText = q.q;
+        qText.classList.add('fade-in'); // Лека анимация
+
+        q.a.forEach(ans => {
+            const b = document.createElement('button');
+            b.innerText = ans.t;
+            b.classList.add('btn-quiz-answer-pastel');
+            b.onclick = () => {
+                if (ans.c) score++;
+                index++;
+                // Кратко изчакване за ефект
+                setTimeout(showQuestion, 200);
+            };
+            btnGrid.appendChild(b);
+        });
+    } else {
+        finishQuiz();
+    }
+}
+
+function clear() {
+    while (btnGrid.firstChild) btnGrid.removeChild(btnGrid.firstChild);
+    qText.classList.remove('fade-in');
+}
+
+function finishQuiz() {
+    progCont.style.display = 'none';
+    btnGrid.style.display = 'none'; // Скрива бутоните
+    qText.innerText = "Дешифрирането приключи!";
+    
+    let message = score > (questions.length * 0.7) ? 'Ти си DNA Майстор!' : 'Браво за опита! Генетиката е сложна.';
+    
+    scoreDisp.innerHTML = `<h3>Твоят Резултат:</h3><div class="score-num-pastel">${score} / ${questions.length}</div><p>${message}</p>`;
+    scoreDisp.style.display = 'block';
+    
+    startBtn.innerText = "Опитай пак";
+    startBtn.style.display = 'inline-block';
+}
+
+/* --- Global Variables & Aesthetic Palette --- */
+:root {
+    /* Натурална пастелна палитра */
+    --bg-light: #fdfcf9; /* Кремав, топъл бял */
+    --text-main: #4a4e52; /* Мек сив за текст */
+    --text-light: #7e858b;
+    
+    /* Пастелни акценти */
+    --pastel-sage: #c8d6c7; /* Градински чай (Зелено) */
+    --pastel-sage-dark: #b1c1af;
+    --pastel-peach: #f7d9c4; /* Праскова (Оранжево) */
+    --pastel-peach-dark: #f0c3a8;
+    --pastel-blue: #d6e2e9; /* Светло синьо */
+    --pastel-blue-dark: #b9cfda;
+    
+    --glass: rgba(255, 255, 255, 0.6);
+    --border-light: rgba(74, 78, 82, 0.1);
+    
+    --font-main: 'Poppins', sans-serif;
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+    --transition: all 0.4s ease;
+}
+
+/* --- Reset & Base --- */
+* { box-sizing: border-box; }
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Pattern (Лека химична шарка) */
+.bio-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(at 10% 10%, rgba(200, 214, 199, 0.2) 0px, transparent 50%),
+        radial-gradient(at 90% 90%, rgba(214, 226, 233, 0.2) 0px, transparent 50%);
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* --- Header & Navigation --- */
+header {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo { display: flex; align-items: center; gap: 10px; }
+.helix-icon { font-size: 2rem; }
+.logo-text { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; color: var(--text-main); }
+.logo-text .thin { font-weight: 300; color: var(--text-light); }
+
+nav { display: flex; gap: 10px; }
+
+.btn-nav {
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    background-color: #fff;
+    border: 1px solid var(--border-light);
+}
+
+.btn-nav:hover { background-color: #f0f0f0; transform: translateY(-2px); }
+.btn-nav.active { color: #fff; font-weight: 600; border-color: transparent; }
+
+/* Dynamic active states with pastel colors */
+nav a[href="index.html"].active { background-color: var(--pastel-peach-dark); }
+nav a[href="facts.html"].active { background-color: var(--pastel-sage-dark); }
+nav a[href="quiz.html"].active { background-color: var(--pastel-blue-dark); }
+
+/* --- UI Elements --- */
+.badge-pastel {
+    display: inline-block;
+    background: var(--pastel-blue);
+    color: #fff;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+}
+
+/* --- Aesthetic Hero Section (Home) --- */
+.aesthetic-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    padding: 60px;
+    border-radius: 30px;
+    margin: 40px 0;
+}
+
+.hero-content h1 {
+    font-size: 3.2rem;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.hero-content p {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+    max-width: 500px;
+    font-weight: 300;
+}
+
+.hero-image-container { display: flex; justify-content: center; position: relative; }
+
+.floral-helix {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    /* Анимация за леко плаване */
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+/* --- Navigation Cards Grid --- */
+.nav-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 80px;
+}
+
+.nav-card {
+    background-color: #fff;
+    border-radius: 24px;
+    padding: 40px;
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
+
+.card-icon { font-size: 3rem; margin-bottom: 25px; }
+.card-icon .q-count { font-weight: 700; font-size: 1.5rem; position: relative; top: -15px; }
+
+.nav-card h3 { margin: 0 0 10px 0; font-size: 1.3rem; font-weight: 600; color: var(--text-main); }
+.nav-card p { margin: 0; font-size: 0.95rem; color: var(--text-light); font-weight: 300; }
+
+/* Pastel card border colors */
+.card-sage { border-top: 5px solid var(--pastel-sage); }
+.card-peach { border-top: 5px solid var(--pastel-peach); }
+.card-blue { border-top: 5px solid var(--pastel-blue); }
+
+/* --- Facts Section --- */
+.section-header { text-align: center; padding: 60px 0 30px; max-width: 700px; margin: 0 auto; }
+.section-header h1 { font-size: 2.8rem; margin: 0 0 10px; }
+.section-header p { color: var(--text-light); font-size: 1.1rem; font-weight: 300; }
+
+.facts-aesthetic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    padding-bottom: 80px;
+}
+
+.fact-card-pastel {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    display: flex;
+    align-items: start;
+    gap: 20px;
+}
+
+.fact-card-pastel:hover { transform: translateY(-4px); }
+
+.fact-visual {
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(74, 78, 82, 0.1);
+    line-height: 1;
+}
+
+.fact-info h3 { margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 600; color: var(--text-main); }
+.fact-info p { margin: 0; font-size: 0.9rem; color: var(--text-light); font-weight: 300; }
+.fact-info strong { color: var(--text-main); font-weight: 500; }
+
+/* --- Quiz Section --- */
+.quiz-box-pastel { max-width: 750px; margin: 60px auto; padding: 50px; border-radius: 24px; }
+.quiz-header { text-align: center; margin-bottom: 30px; }
+.quiz-header h2 { font-size: 2.2rem; margin: 0; }
+.quiz-header p { color: var(--text-light); font-weight: 300; margin-top: 5px; }
+
+.quiz-controls { text-align: center; margin-top: 30px; }
+
+.btn-pastel-primary {
+    padding: 15px 40px;
+    border-radius: 20px;
+    background-color: var(--pastel-blue-dark);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: var(--font-main);
+}
+.btn-pastel-primary:hover { background-color: var(--pastel-blue); transform: translateY(-2px); }
+
+#question-text { font-size: 1.35rem; text-align: center; margin-bottom: 35px; min-height: 1.4em; font-weight: 400; color: var(--text-main); }
+
+.btn-grid-pastel { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 600px; margin: 0 auto; }
+
+.btn-quiz-answer-pastel {
+    background: #fff;
+    color: var(--text-main);
+    padding: 20px 25px;
+    border-radius: 15px;
+    text-align: left;
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: var(--font-main);
+}
+
+.btn-quiz-answer-pastel:hover { border-color: var(--pastel-sage); background-color: var(--bg-light); transform: translateX(5px); }
+
+/* Progress Bar Pastel */
+.progress-container-pastel { margin-bottom: 30px; display: none; }
+.progress-text { font-size: 0.8rem; color: var(--text-light); margin-bottom: 6px; text-align: center; font-weight: 300; }
+.progress-bar-out-pastel { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; }
+#progress-bar-in-pastel {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, var(--pastel-peach), var(--pastel-sage));
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.score-display-pastel { text-align: center; display: none; padding: 30px; }
+.score-num-pastel { font-size: 6rem; font-weight: 800; color: var(--pastel-blue-dark); line-height: 1; margin: 10px 0; }
+
+/* --- Animations --- */
+.fade-in { animation: fadeIn 0.5s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Footer --- */
+footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border-light); margin-top: auto; }
+.footer-content { opacity: 0.7; font-size: 0.85rem; font-weight: 300; }
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .aesthetic-hero { grid-template-columns: 1fr; text-align: center; padding: 40px; }
+    .hero-content h1 { font-size: 2.6rem; }
+    .hero-content p { margin: 0 auto 30px; }
+    .nav-cards-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    header { padding: 0; }
+    .header-content { flex-direction: column; gap: 15px; }
+    nav { flex-wrap: wrap; justify-content: center; }
+    .aesthetic-hero h1 { font-size: 2.2rem; }
+    .nav-cards-grid { grid-template-columns: 1fr; gap: 20px; }
+    .quiz-box-pastel { padding: 25px; }
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | 20 Удивителни Факта</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bio-bg"></div>
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="helix-icon">🧬</span>
+                <span class="logo-text">DNA <span class="thin">World</span></span>
+            </div>
+            <nav>
+                <a href="index.html" class="btn-nav">НАЧАЛО</a>
+                <a href="facts.html" class="active btn-nav">БИБЛИОТЕКА С ФАКТИ</a>
+                <a href="quiz.html" class="btn-nav">ГЕНОМ ТЕСТ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <header class="section-header">
+            <div class="badge-pastel">Генетична Библиотека</div>
+            <h1>20 Генетични Чудеса</h1>
+            <p>Потопете се в детайлите на най-съвършената информационна система в природата.</p>
+        </header>
+
+        <div class="facts-aesthetic-grid">
+            
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">01</div>
+                <div class="fact-info">
+                    <h3>Пълното име</h3>
+                    <p>ДНК означава <strong>Дезоксирибонуклеинова киселина</strong>. Тя носи инструкциите за изграждането на всеки протеин в тялото ти.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">02</div>
+                <div class="fact-info">
+                    <h3>Двойната спирала</h3>
+                    <p>Структурата е открита през 1953 г. и прилича на <strong>усукана стълба</strong>. Тя е изключително стабилна и компактна.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-blue">
+                <div class="fact-visual">03</div>
+                <div class="fact-info">
+                    <h3>Азбуката на живота</h3>
+                    <p>Цялата информация се записва само с 4 бази: <strong>Аденин (A), Тимин (T), Цитозин (C) и Гуанин (G)</strong>.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">04</div>
+                <div class="fact-info">
+                    <h3>Космическа дължина</h3>
+                    <p>Ако разпънеш ДНК от всичките си клетки, тя би достигнала <strong>до Плутон и обратно</strong> няколко пъти.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">05</div>
+                <div class="fact-info">
+                    <h3>Бананова прилика</h3>
+                    <p>Хората споделят около <strong>50% от своята ДНК с бананите</strong>. Много от основните клетъчни функции са идентични.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-blue">
+                <div class="fact-visual">06</div>
+                <div class="fact-info">
+                    <h3>99.9% идентичност</h3>
+                    <p>Всички хора на Земята са <strong>99.9% еднакви</strong> генетично. Цялото ни разнообразие се крие в едва 0.1%.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">07</div>
+                <div class="fact-info">
+                    <h3>Вирусно наследство</h3>
+                    <p>Около <strong>8% от човешкия геном</strong> се състои от древни вируси, които са инфектирали предците ни преди милиони години.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">08</div>
+                <div class="fact-info">
+                    <h3>Компактно опаковане</h3>
+                    <p>За да се побере в ядрото, ДНК се навива около протеини, наречени <strong>хистони</strong>, образувайки хромозоми.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-blue">
+                <div class="fact-visual">09</div>
+                <div class="fact-info">
+                    <h3>Слънчеви повреди</h3>
+                    <p>UV лъчите могат да разрушат връзките в ДНК. Тялото ни обаче има <strong>сложни механизми за "поправка"</strong> на тези грешки.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">10</div>
+                <div class="fact-info">
+                    <h3>Уникален отпечатък</h3>
+                    <p>Освен еднояйчните близнаци, <strong>никои двама души</strong> нямат напълно идентична ДНК последователност.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">11</div>
+                <div class="fact-info">
+                    <h3>ДНК съхранение</h3>
+                    <p>ДНК е най-плътният склад за информация. Цялото знание на света може да се събере в <strong>няколко грама ДНК</strong>.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-blue">
+                <div class="fact-visual">12</div>
+                <div class="fact-info">
+                    <h3>Митохондриална ДНК</h3>
+                    <p>Освен в ядрото, имаме ДНК и в митохондриите, която се предава <strong>само от майката</strong>.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">13</div>
+                <div class="fact-info">
+                    <h3>Бързина на репликация</h3>
+                    <p>Клетките копират ДНК с невероятна скорост и точност – около <strong>50 бази в секунда</strong>.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">14</div>
+                <div class="fact-info">
+                    <h3>Розалинд Франклин</h3>
+                    <p>Тя заснема <strong>"Снимка 51"</strong>, която е първото реално доказателство за спиралната структура на ДНК.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-blue">
+                <div class="fact-visual">15</div>
+                <div class="fact-info">
+                    <h3>Стареене и Теломери</h3>
+                    <p>Краищата на хромозомите (теломерите) се скъсяват при всяко делене, което е основен механизъм на <strong>биологичното стареене</strong>.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">16</div>
+                <div class="fact-info">
+                    <h3>Клонирането</h3>
+                    <p>Първият клониран бозайник е <strong>овцата Доли</strong> през 1996 г., създадена чрез пренос на ядро от възрастна клетка.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">17</div>
+                <div class="fact-info">
+                    <h3>Генетични мутации</h3>
+                    <p>Повечето мутации са неутрални, но някои водят до еволюционни предимства или наследствени заболявания.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-blue">
+                <div class="fact-visual">18</div>
+                <div class="fact-info">
+                    <h3>Шимпанзетата</h3>
+                    <p>Споделяме около <strong>98% от гените си</strong> с шимпанзетата, което ги прави нашите най-близки роднини.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-sage">
+                <div class="fact-visual">19</div>
+                <div class="fact-info">
+                    <h3>CRISPR технология</h3>
+                    <p>Днес учените могат буквално да <strong>"редактират" ДНК</strong>, поправяйки генетични дефекти с прецизност.</p>
+                </div>
+            </div>
+
+            <div class="fact-card-pastel card-peach">
+                <div class="fact-visual">20</div>
+                <div class="fact-info">
+                    <h3>ДНК в криминалистиката</h3>
+                    <p>Достатъчна е само една клетка от кожа или косъм, за да се извлече профил, който да идентифицира човек.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 DNA World | Вдъхновено от Природата 🧬</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Танцът на Природата</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bio-bg"></div> <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="helix-icon">🧬</span>
+                <span class="logo-text">DNA <span class="thin">World</span></span>
+            </div>
+            <nav>
+                <a href="index.html" class="active btn-nav">НАЧАЛО</a>
+                <a href="facts.html" class="btn-nav">БИБЛИОТЕКА С ФАКТИ</a>
+                <a href="quiz.html" class="btn-nav">ГЕНОМ ТЕСТ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="aesthetic-hero glass">
+            <div class="hero-content">
+                <h1>ДНК: Кодът на Живота,<br>Танцът на Природата</h1>
+                <p>Открий как 4 прости бази създават безкрайната красота. Твоето пътуване към разбирането започва тук.</p>
+            </div>
+            <div class="hero-image-container">
+                <img src="https://i.imgur.com/8N4J9D9.png" alt="Aesthetic Floral DNA Helix" class="floral-helix">
+            </div>
+        </section>
+
+        <section class="nav-cards-grid">
+            
+            <a href="facts.html" class="nav-card card-sage">
+                <div class="card-icon">📖🌱</div>
+                <h3>ИНТЕРЕСНИ ФАКТИ</h3>
+                <p>Разгледай 20 удивителни тайни.</p>
+            </a>
+
+            <a href="quiz.html" class="nav-card card-peach">
+                <div class="card-icon">💡<span class="q-count">25</span></div>
+                <h3>DNA MASTER QUIZ</h3>
+                <p>Тествай знанията си. 25 предизвикателства.</p>
+            </a>
+
+            <a href="#" class="nav-card card-blue">
+                <div class="card-icon">🔗🌀</div>
+                <h3>ИНТЕРАКТИВНА ХЕЛИКСА</h3>
+                <p>Разгледай кода в детайли (Очаквайте скоро).</p>
+            </a>
+            
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 DNA World | Вдъхновено от Природата 🧬</p>
+        </div>
+    </footer>
+</body>
+</html>
