@@ -1,131 +1,69 @@
-/* --- Global Variables & Neon Pastel Palette --- */
-:root {
-    --bg-dark: #0f172a; /* Дълбоко среднощно синьо */
-    --bg-card: rgba(30, 41, 59, 0.7);
-    --text-main: #f1f5f9;
-    --text-light: #94a3b8;
-    
-    /* Неонови пастелни цветове */
-    --neon-sage: #2dd4bf;   /* Тюркоаз / Мента */
-    --neon-peach: #fb923c;  /* Ярка праскова */
-    --neon-blue: #38bdf8;   /* Неоново синьо */
-    
-    --border-light: rgba(255, 255, 255, 0.1);
-    --font-main: 'Poppins', sans-serif;
-    --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.2);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Neon Edition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">🧬 DNA <span class="thin">World</span></div>
+            <nav>
+                <a href="index.html" class="active btn-nav">НАЧАЛО</a>
+                <a href="facts.html" class="btn-nav">БИБЛИОТЕКА</a>
+                <a href="quiz.html" class="btn-nav">ГЕНОМ ТЕСТ</a>
+            </nav>
+        </div>
+    </header>
 
-* { box-sizing: border-box; scroll-behavior: smooth; }
+    <main class="container">
+        <section class="aesthetic-hero glass">
+            <div class="hero-content">
+                <div class="badge-pastel" style="background: var(--neon-sage)">Биотехнологии 2026</div>
+                <h1>Кодът на Живота,<br><span style="color: var(--neon-blue)">В Неонов Ритъм</span></h1>
+                <p>Изследвай интерактивната структура на ДНК и разкрий тайните на своето съществуване чрез нашия 3D модел.</p>
+            </div>
+            <div class="hero-image-container">
+                <img src="https://i.imgur.com/8N4J9D9.png" alt="DNA Helix" class="floral-helix">
+            </div>
+        </section>
 
-body {
-    font-family: var(--font-main);
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    margin: 0;
-    line-height: 1.6;
-    overflow-x: hidden;
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(45, 212, 191, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
-}
+        <section id="interactive-section">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <div class="badge-pastel" style="background: var(--neon-blue)">Live Engine</div>
+                <h2>Интерактивна Хелипса</h2>
+                <p style="color: var(--text-light)">Математически рендер на двойната спирала</p>
+            </div>
+            <div id="helix-container" class="glass">
+                </div>
+        </section>
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        <section class="nav-cards-grid">
+            <a href="facts.html" class="nav-card glass card-sage">
+                <div class="card-icon">📖</div>
+                <h3>20 ФАКТА</h3>
+                <p>Научи неочакваното.</p>
+            </a>
+            <a href="quiz.html" class="nav-card glass card-peach">
+                <div class="card-icon">💡</div>
+                <h3>MASTER QUIZ</h3>
+                <p>25 предизвикателства.</p>
+            </a>
+            <a href="#interactive-section" class="nav-card glass card-blue">
+                <div class="card-icon">🌀</div>
+                <h3>3D МОДЕЛ</h3>
+                <p>Разгледай отблизо.</p>
+            </a>
+        </section>
+    </main>
 
-/* --- Header --- */
-header {
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-light);
-    position: sticky;
-    top: 0; z-index: 1000;
-}
+    <footer style="text-align: center; padding: 40px; border-top: 1px solid var(--border-light);">
+        <p style="color: var(--text-light); font-size: 0.9rem;">&copy; 2026 DNA World | Neon Interactive Experience 🧬</p>
+    </footer>
 
-.header-content { padding: 1rem 0; display: flex; justify-content: space-between; align-items: center; }
-
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.5rem; }
-.logo .thin { font-weight: 300; color: var(--text-light); }
-
-nav { display: flex; gap: 12px; }
-
-.btn-nav {
-    color: var(--text-main);
-    text-decoration: none;
-    padding: 8px 18px;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    transition: var(--transition);
-    border: 1px solid var(--border-light);
-}
-
-.btn-nav:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); border-color: var(--neon-blue); }
-.btn-nav.active { background: var(--neon-blue); color: #000; font-weight: 600; box-shadow: 0 0 15px var(--neon-blue); }
-
-/* --- UI Components --- */
-.glass {
-    background: var(--bg-card);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-glow);
-    border-radius: 24px;
-}
-
-.badge-pastel {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    color: #000;
-}
-
-/* --- Hero Section --- */
-.aesthetic-hero {
-    display: grid; grid-template-columns: 1.2fr 0.8fr;
-    align-items: center; gap: 40px; padding: 60px; margin: 40px 0;
-}
-
-.hero-content h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
-.hero-content p { font-size: 1.2rem; color: var(--text-light); font-weight: 300; }
-
-.floral-helix { width: 100%; max-width: 400px; filter: drop-shadow(0 0 30px var(--neon-sage)); animation: float 6s ease-in-out infinite; }
-
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-
-/* --- Interactive Helix Section --- */
-#helix-container {
-    height: 500px; width: 100%; perspective: 1000px;
-    display: flex; justify-content: center; align-items: center;
-    position: relative; overflow: hidden; margin-top: 30px;
-}
-
-.helix-node {
-    position: absolute; width: 14px; height: 14px;
-    border-radius: 50%; box-shadow: 0 0 15px currentColor;
-    transition: transform 0.1s linear;
-}
-
-/* --- Cards Grid --- */
-.nav-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin: 60px 0; }
-
-.nav-card {
-    padding: 40px; text-decoration: none; transition: var(--transition);
-    text-align: center; display: flex; flex-direction: column; align-items: center;
-}
-
-.nav-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); }
-
-.card-icon { font-size: 3rem; margin-bottom: 20px; }
-.nav-card h3 { color: var(--text-main); margin-bottom: 10px; }
-
-.card-sage { border-bottom: 4px solid var(--neon-sage); }
-.card-peach { border-bottom: 4px solid var(--neon-peach); }
-.card-blue { border-bottom: 4px solid var(--neon-blue); }
-
-/* --- Responsive --- */
-@media (max-width: 992px) {
-    .aesthetic-hero { grid-template-columns: 1fr; text-align: center; padding: 40px; }
-    .nav-cards-grid { grid-template-columns: 1fr; }
-}
+    <script src="script.js"></script>
+</body>
+</html>
