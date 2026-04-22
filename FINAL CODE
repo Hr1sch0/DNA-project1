@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA World | Neon Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070b14;
+            --bg-card: rgba(13, 20, 38, 0.9);
+            --text-main: #f1f5f9;
+            --text-light: #94a3b8;
+            --neon-mint: #2ef2d7;
+            --neon-pink: #f472b6;
+            --neon-cyan: #38bdf8;
+            --border-glow: rgba(56, 189, 248, 0.2);
+            --shadow-glow: 0 0 30px rgba(46, 242, 215, 0.15);
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            background-image: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            background: rgba(7, 11, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glow);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .header-content { padding: 1rem 0; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 1.5rem; cursor: pointer; color: var(--neon-cyan); }
+        .logo span { color: var(--neon-pink); }
+        
+        nav { display: flex; gap: 15px; }
+        .btn-nav {
+            color: var(--text-main); text-decoration: none; padding: 10px 20px;
+            border-radius: 12px; font-size: 0.9rem; transition: 0.3s;
+            cursor: pointer; border: 1px solid transparent;
+        }
+        .btn-nav.active { background: var(--neon-cyan); color: #000; font-weight: 600; box-shadow: 0 0 15px var(--neon-cyan); }
+
+        .page { display: none; padding: 40px 0; animation: fadeIn 0.6s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Hero & 3D Helix */
+        .hero-section {
+            background: var(--bg-card); border: 1px solid var(--border-glow);
+            border-radius: 30px; padding: 50px; display: grid; 
+            grid-template-columns: 1fr 1fr; align-items: center; gap: 40px;
+        }
+        #helix-container {
+            height: 450px; perspective: 1000px; display: flex;
+            justify-content: center; align-items: center; position: relative;
+        }
+        .helix-node { position: absolute; width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 15px currentColor; }
+
+        /* Facts Styling */
+        .facts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .fact-card {
+            background: var(--bg-card); border: 1px solid var(--border-glow);
+            padding: 30px; border-radius: 20px; transition: 0.3s; position: relative;
+            overflow: hidden;
+        }
+        .fact-card:hover { border-color: var(--neon-mint); transform: translateY(-5px); }
+        .fact-num { font-size: 3rem; position: absolute; right: 10px; top: 0; opacity: 0.1; font-weight: 900; }
+
+        /* Quiz Styling */
+        .quiz-box { 
+            max-width: 700px; margin: 0 auto; background: var(--bg-card); 
+            padding: 40px; border-radius: 30px; border: 1px solid var(--border-glow);
+        }
+        .ans-btn {
+            display: block; width: 100%; padding: 18px; margin: 12px 0;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border-glow);
+            color: white; border-radius: 15px; cursor: pointer; text-align: left;
+            font-size: 1rem; transition: 0.2s;
+        }
+        .ans-btn:hover { background: var(--neon-pink); color: #000; font-weight: 600; border-color: transparent; }
+        .progress-bar { height: 8px; background: #1a1a1a; border-radius: 4px; margin-bottom: 30px; }
+        #prog-fill { height: 100%; width: 0%; background: var(--neon-mint); box-shadow: 0 0 10px var(--neon-mint); transition: 0.4s; }
+
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        .neon { color: var(--neon-mint); text-shadow: 0 0 10px var(--neon-mint); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo" onclick="showPage('home')">DNA <span>NEON</span></div>
+            <nav>
+                <div class="btn-nav active" id="nav-home" onclick="showPage('home')">НАЧАЛО</div>
+                <div class="btn-nav" id="nav-facts" onclick="showPage('facts')">20 ФАКТА</div>
+                <div class="btn-nav" id="nav-quiz" onclick="showPage('quiz')">QUIZ</div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <div>
+                    <h1>Живият <span class="neon">Код</span></h1>
+                    <p style="font-size: 1.2rem; color: var(--text-light)">Изследвайте 3D структурата на живота и научете тайните на биологичното програмиране.</p>
+                    <button onclick="showPage('facts')" style="margin-top:20px; padding: 15px 35px; border-radius: 50px; border:none; background: var(--neon-cyan); font-weight:700; cursor:pointer;">КЪМ ФАКТИТЕ</button>
+                </div>
+                <div id="helix-container"></div>
+            </div>
+        </section>
+
+        <section id="facts" class="page">
+            <h2 style="text-align:center; font-size: 2.5rem; margin-bottom:40px;">Генетична Библиотека</h2>
+            <div class="facts-grid" id="facts-container"></div>
+        </section>
+
+        <section id="quiz" class="page">
+            <div class="quiz-box">
+                <div class="progress-bar"><div id="prog-fill"></div></div>
+                <div id="quiz-ui">
+                    <h2 id="q-text" style="margin-bottom:30px;">Зареждане...</h2>
+                    <div id="ans-list"></div>
+                </div>
+                <div id="quiz-results" style="display:none; text-align:center;">
+                    <h1 id="score-text">0/20</h1>
+                    <p id="feedback-text"></p>
+                    <button onclick="startQuiz()" style="padding:15px 30px; background:var(--neon-mint); border:none; border-radius:10px; cursor:pointer; font-weight:700;">НОВ ОПИТ</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- ПРЕВКЛЮЧВАНЕ ---
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('nav-'+id).classList.add('active');
+            if(id === 'quiz') startQuiz();
+        }
+
+        // --- 3D HELIX ---
+        const container = document.getElementById('helix-container');
+        const nodes = [];
+        for(let i=0; i<40; i++) {
+            const el1 = document.createElement('div'); el1.className='helix-node';
+            const el2 = document.createElement('div'); el2.className='helix-node';
+            el1.style.color = 'var(--neon-mint)';
+            el2.style.color = 'var(--neon-pink)';
+            container.appendChild(el1); container.appendChild(el2);
+            nodes.push({el1, el2, idx: i});
+        }
+        let rot = 0;
+        function animate() {
+            rot += 0.02;
+            nodes.forEach(n => {
+                const angle = rot + (n.idx * 0.4);
+                const x = Math.sin(angle) * 90;
+                const z = Math.cos(angle) * 90;
+                const y = (n.idx * 12) - 240;
+                const s = (z + 90) / 180 + 0.5;
+                n.el1.style.transform = `translate3d(${x}px, ${y}px, ${z}px) scale(${s})`;
+                n.el2.style.transform = `translate3d(${-x}px, ${y}px, ${-z}px) scale(${1.5-s})`;
+                n.el1.style.opacity = s; n.el2.style.opacity = 1.5-s;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- 20 ФАКТА ---
+        const facts = [
+            "ДНК е съставена от само 4 бази: Аденин, Тимин, Гуанин и Цитозин.",
+            "Ако разгънете ДНК от една клетка, тя би била дълга около 2 метра.",
+            "Общото ДНК в тялото ви може да стигне до Слънцето и обратно 60 пъти.",
+            "Човешкото ДНК е 99.9% идентично при всички хора.",
+            "Споделяме около 60% от гените си с бананите.",
+            "Около 8% от нашето ДНК идва от древни вируси, които са ни заразили.",
+            "ДНК може да се извлече от фосили на над 1 милион години.",
+            "Червените кръвни клетки са единствените клетки без ДНК.",
+            "Близнаците имат абсолютно еднакво ДНК, но различни отпечатъци.",
+            "Всички синеоки хора имат един общ прародител.",
+            "Геномът съдържа 3 милиарда букви от генетичния код.",
+            "ДНК е открита през 1869 г., но структурата й е разбрана чак през 1953 г.",
+            "97% от нашето ДНК няма известна функция (нарича се 'Junk DNA').",
+            "ДНК може да съхранява информация хиляди години без захранване.",
+            "Космонавтите стават малко по-високи в космоса, но ДНК-то им се променя леко поради радиацията.",
+            "Октоподите могат да редактират собственото си РНК, за да се адаптират към студа.",
+            "Бактериите имат кръгова форма на ДНК.",
+            "Една лъжичка ДНК може да съдържа цялата дигитална информация на света.",
+            "Майчиното ДНК (митохондриално) се предава само от жените.",
+            "Мутациите в ДНК са двигателят на еволюцията."
+        ];
+        const fCont = document.getElementById('facts-container');
+        facts.forEach((f, i) => {
+            fCont.innerHTML += `<div class="fact-card"><div class="fact-num">${i+1}</div><p>${f}</p></div>`;
+        });
+
+        // --- 20 ВЪПРОСА QUIZ ---
+        const questions = [
+            {q: "Колко са основните азотни бази в ДНК?", a: ["2", "4", "6"], c: 1},
+            {q: "Коя база се свързва винаги с Аденин (A)?", a: ["Тимин", "Гуанин", "Цитозин"], c: 0},
+            {q: "Къде се намира ДНК в клетката?", a: ["В ядрото", "В рибозомите", "В мембраната"], c: 0},
+            {q: "Как се нарича формата на ДНК?", a: ["Кръг", "Двойна спирала", "Триъгълник"], c: 1},
+            {q: "Колко хромозоми има човек?", a: ["23", "46", "52"], c: 1},
+            {q: "Кой пол предава митохондриалната ДНК?", a: ["Мъжкият", "Женският", "И двата"], c: 1},
+            {q: "Какъв процент ДНК споделяме с шимпанзетата?", a: ["98.8%", "50%", "70%"], c: 0},
+            {q: "Коя захар участва в ДНК?", a: ["Рибоза", "Дезоксирибоза", "Глюкоза"], c: 1},
+            {q: "Какво означава съкращението РНК?", a: ["Реактивна киселина", "Рибонуклеинова киселина", "Радиална клетка"], c: 1},
+            {q: "Коя база в РНК заменя Тимина?", a: ["Урацил", "Гуанин", "Аденин"], c: 0},
+            {q: "Колко водородни връзки има между C и G?", a: ["1", "2", "3"], c: 2},
+            {q: "Кой е откривателят на структурата на ДНК?", a: ["Уотсън и Крик", "Айнщайн", "Тесла"], c: 0},
+            {q: "Какво е ген?", a: ["Клетка", "Участък от ДНК", "Протеин"], c: 1},
+            {q: "Какво е мутация?", a: ["Промяна в ДНК", "Вид вирус", "Вид храна"], c: 0},
+            {q: "Кой е 'бащата' на генетиката?", a: ["Мендел", "Дарвин", "Пастьор"], c: 0},
+            {q: "Колко е дълга ДНК в една клетка?", a: ["2 мм", "2 см", "2 метра"], c: 2},
+            {q: "ДНК е заредена...?", a: ["Положително", "Отрицателно", "Неутрално"], c: 1},
+            {q: "Коя технология позволява редактиране на гени?", a: ["CRISPR", "Bluetooth", "Laser"], c: 0},
+            {q: "Колко процента от ДНК са 'гени'?", a: ["100%", "Около 2%", "50%"], c: 1},
+            {q: "Могат ли еднояйчни близнаци да имат различно ДНК?", a: ["Да", "Не", "Само след операция"], c: 1}
+        ];
+
+        let curQ = 0, score = 0;
+        function startQuiz() {
+            curQ = 0; score = 0;
+            document.getElementById('quiz-ui').style.display = 'block';
+            document.getElementById('quiz-results').style.display = 'none';
+            showQ();
+        }
+        function showQ() {
+            const q = questions[curQ];
+            document.getElementById('q-text').innerText = q.q;
+            const list = document.getElementById('ans-list');
+            list.innerHTML = '';
+            q.a.forEach((ans, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'ans-btn';
+                btn.innerText = ans;
+                btn.onclick = () => { if(i===q.c) score++; curQ++; if(curQ<questions.length) showQ(); else finish(); };
+                list.appendChild(btn);
+            });
+            document.getElementById('prog-fill').style.width = (curQ / questions.length) * 100 + '%';
+        }
+        function finish() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            const res = document.getElementById('quiz-results');
+            res.style.display = 'block';
+            document.getElementById('score-text').innerText = `${score} / ${questions.length}`;
+            document.getElementById('feedback-text').innerText = score > 15 ? "Ти си истински генетик!" : "Добър опит! Прочети фактите пак.";
+        }
+    </script>
+</body>
+</html>
